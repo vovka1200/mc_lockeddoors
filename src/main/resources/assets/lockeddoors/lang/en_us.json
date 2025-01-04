@@ -1,3 +1,4 @@
 {
-    "block.lockeddoors.yellow_door":"Yellow Door"
+    "block.lockeddoors.yellow_door":"Yellow door",
+    "item.lockeddoors.yellow_door_key": "Yellow key"
 }
