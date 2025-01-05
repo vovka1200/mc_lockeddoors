@@ -17,11 +17,19 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
+/**
+ * 
+ */
 public class LockableDoor extends DoorBlock {
 
 	private static final Logger LOGGER = LogUtils.getLogger();
 	public static final BooleanProperty LOCKED = BooleanProperty.create("locked");
 
+	/**
+	 * 
+	 * @param blockSetType
+	 * @param properties
+	 */
 	public LockableDoor(BlockSetType blockSetType, BlockBehaviour.Properties properties) {
 		super(blockSetType, properties);
 		this.registerDefaultState(this.stateDefinition.any().setValue(LOCKED, true));
@@ -33,29 +41,53 @@ public class LockableDoor extends DoorBlock {
 		builder.add(LOCKED);
 	}
 
+	/**
+	 * 
+	 * @param state
+	 * @return
+	 */
 	protected boolean isLocked(BlockState state) {
 		return state.getValue(LOCKED);
 	}
 
+	/**
+	 * 
+	 * @param entity
+	 * @param world
+	 * @param state
+	 * @param pos
+	 * @param locked
+	 * @return
+	 */
 	protected BlockState setLocked(Entity entity, Level world, BlockState state, BlockPos pos, boolean locked) {
 		BlockState newState = state.setValue(LOCKED, locked);
 		world.setBlockAndUpdate(pos, newState);
-		LOGGER.info("setLocked(): Door is {}", newState);
+		LOGGER.debug("door state {}", newState);
 		return newState;
+	}
+
+	/**
+	 * 
+	 * @param state
+	 * @param player
+	 * @return
+	 */
+	protected boolean hasKey(BlockState state, Player player) {
+		String itemInHand = player.getMainHandItem().getItem().toString();
+		String blockId = state.getBlock().getDescriptionId();
+		LOGGER.debug("{} opened={}, locked={}, in hand {}", blockId, state.getValue(OPEN), state.getValue(LOCKED),
+				itemInHand);
+		return itemInHand.contains("key") && blockId.endsWith(itemInHand.replaceFirst("_key", ""));
 	}
 
 	@Override
 	public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player,
 			BlockHitResult hit) {
-		String itemInHand = player.getMainHandItem().getItem().toString();
-		String blockId = state.getBlock().getDescriptionId();
-		LOGGER.info("useWithoutItem(): {} opened={}, locked={}, in hand {}", blockId, state.getValue(OPEN),
-				state.getValue(LOCKED), itemInHand);
+		LOGGER.debug("door opened={}, locked={}", state.getValue(OPEN), state.getValue(LOCKED));
 		if (isOpen(state)) {
 			return super.useWithoutItem(state, world, pos, player, hit);
 		} else {
-			LOGGER.info("useWithoutItem(): blockId {}", itemInHand.replaceFirst("_key", ""));
-			if (blockId.endsWith(itemInHand.replaceFirst("_key", ""))) {
+			if (hasKey(state, player)) {
 				if (isLocked(state)) {
 					state = setLocked(player, world, state, pos, false);
 				} else {
