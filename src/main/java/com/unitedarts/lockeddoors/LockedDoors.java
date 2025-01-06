@@ -51,6 +51,10 @@ public class LockedDoors {
 	// Sounds
 	public static final RegistryObject<SoundEvent> LOCKED_DOOR_SOUND = SOUNDS.register("lockeddoor",
 			() -> SoundEvent.createVariableRangeEvent(new ResourceLocation(MODID, "lockeddoor")));
+	public static final RegistryObject<SoundEvent> UNLOCK_DOOR_SOUND = SOUNDS.register("unlockdoor",
+			() -> SoundEvent.createVariableRangeEvent(new ResourceLocation(MODID, "unlockdoor")));
+	public static final RegistryObject<SoundEvent> LOCK_DOOR_SOUND = SOUNDS.register("lockdoor",
+			() -> SoundEvent.createVariableRangeEvent(new ResourceLocation(MODID, "lockdoor")));
 
 	// Yellow Door
 	public static final RegistryObject<Block> YELLOW_DOOR_BLOCK = BLOCKS.register("yellow_door",

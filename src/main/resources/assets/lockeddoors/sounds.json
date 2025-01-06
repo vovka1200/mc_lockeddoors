@@ -4,5 +4,17 @@
 		"sounds": [
 			"lockeddoors:lockeddoor"
 		]
+	},
+	"unlockdoor": {
+		"subtitle": "lockeddoors.sounds.unlockdoor",
+		"sounds": [
+			"lockeddoors:unlockdoor"
+		]
+	},
+	"lockdoor": {
+		"subtitle": "lockeddoors.sounds.lockdoor",
+		"sounds": [
+			"lockeddoors:lockdoor"
+		]
 	}
 }
