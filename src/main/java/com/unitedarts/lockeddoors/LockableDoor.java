@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -96,6 +97,8 @@ public class LockableDoor extends DoorBlock {
 				return InteractionResult.SUCCESS;
 			} else {
 				if (isLocked(state)) {
+					world.playLocalSound(pos, LockedDoors.LOCKED_DOOR_SOUND.get(), SoundSource.BLOCKS, 1.0f, 1.0f,
+							false);
 					return InteractionResult.SUCCESS;
 				} else {
 					return super.useWithoutItem(state, world, pos, player, hit);

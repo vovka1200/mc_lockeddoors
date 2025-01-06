@@ -1,0 +1,8 @@
+{
+	"lockeddoor": {
+		"subtitle": "lockeddoors.sounds.lockeddoor",
+		"sounds": [
+			"lockeddoors:lockeddoor"
+		]
+	}
+}

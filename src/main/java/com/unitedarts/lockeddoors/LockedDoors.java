@@ -3,11 +3,12 @@ package com.unitedarts.lockeddoors;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -40,9 +41,16 @@ public class LockedDoors {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
 	// Create a Deferred Register to hold Items
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+	// Create a Deferred Register to hold Sounds
+	public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS,
+			MODID);
 	// Create a Deferred Register to hold CreativeModeTabs
 	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister
 			.create(Registries.CREATIVE_MODE_TAB, MODID);
+
+	// Sounds
+	public static final RegistryObject<SoundEvent> LOCKED_DOOR_SOUND = SOUNDS.register("lockeddoor",
+			() -> SoundEvent.createVariableRangeEvent(new ResourceLocation(MODID, "lockeddoor")));
 
 	// Yellow Door
 	public static final RegistryObject<Block> YELLOW_DOOR_BLOCK = BLOCKS.register("yellow_door",
@@ -65,7 +73,8 @@ public class LockedDoors {
 
 		// Register the commonSetup method for modloading
 		modEventBus.addListener(this::commonSetup);
-
+		// Register the Deferred Register to the mod event bus so sounds get registered
+		SOUNDS.register(modEventBus);
 		// Register the Deferred Register to the mod event bus so blocks get registered
 		BLOCKS.register(modEventBus);
 		// Register the Deferred Register to the mod event bus so items get registered
