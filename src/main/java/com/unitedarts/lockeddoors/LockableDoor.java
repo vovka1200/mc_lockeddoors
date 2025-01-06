@@ -90,11 +90,11 @@ public class LockableDoor extends DoorBlock {
 		} else {
 			if (hasKey(state, player)) {
 				if (isLocked(state)) {
-					world.playLocalSound(pos, LockedDoors.UNLOCK_DOOR_SOUND.get(), SoundSource.BLOCKS, 1.0f, 1.0f,
+					world.playLocalSound(pos, LockedDoors.UNLOCK_DOOR_SOUND.get(), SoundSource.BLOCKS, 0.5f, 1.0f,
 							false);
 					state = setLocked(player, world, state, pos, false);
 				} else {
-					world.playLocalSound(pos, LockedDoors.LOCK_DOOR_SOUND.get(), SoundSource.BLOCKS, 1.0f, 1.0f, false);
+					world.playLocalSound(pos, LockedDoors.LOCK_DOOR_SOUND.get(), SoundSource.BLOCKS, 0.5f, 1.0f, false);
 					state = setLocked(player, world, state, pos, true);
 				}
 				return InteractionResult.SUCCESS;
